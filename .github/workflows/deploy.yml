@@ -39,11 +39,16 @@ jobs:
           arguments: clean build
           cache-disabled: true
 
+      - name: Rename JAR
+        run: mv build/libs/ivl-github-actions-0.0.1-SNAPSHOT.jar build/libs/ivl-github-actions.jar
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: build/libs/ivl-github-actions-0.0.1-SNAPSHOT.jar
+          path: |
+            build/libs/ivl-github-actions.jar
+            scripts/
           if-no-files-found: error
           retention-days: 1
 
