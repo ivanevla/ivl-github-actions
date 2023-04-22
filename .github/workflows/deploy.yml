@@ -90,9 +90,10 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASS }}
           key: ${{ secrets.SERVER_SSH }}
           script: |
-            mkdir /appcfg/jar
+            mkdir -p /appcfg/jar
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
             sudo mv /appcfg/github-actions/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
 
