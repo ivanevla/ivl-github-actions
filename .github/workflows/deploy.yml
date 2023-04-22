@@ -90,12 +90,11 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASS }}
           key: ${{ secrets.SERVER_SSH }}
           script: |
             mkdir -p /appcfg/jar
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
-            sudo -S mv /appcfg/github-actions/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo -S mv /appcfg/github-actions/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
