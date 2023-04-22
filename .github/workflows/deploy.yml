@@ -31,9 +31,9 @@ jobs:
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
-        cache-disabled: true
         with:
           arguments: clean build
+          cache-disabled: true
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
