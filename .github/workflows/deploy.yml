@@ -1,4 +1,4 @@
-
+# gradle/gradle-build-action@v2 -> https://github.com/gradle/gradle-build-action
 # actions/upload-artifact@v3 -> https://github.com/actions/upload-artifact
 
 name: Deploy to Server as service
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-22.04
 
     steps:
@@ -30,13 +30,24 @@ jobs:
         with:
           arguments: clean build
 
-      - name: Upload jar
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: artifact
           path: build/libs/ivl-github-actions-0.0.1-SNAPSHOT.jar
+          if-no-files-found: error
+          retention-days: 1
 
-#      - name: Upload to Server
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
 
 
 
