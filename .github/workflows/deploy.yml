@@ -10,7 +10,7 @@
 # actions/download-artifact@v3 -> https://github.com/actions/download-artifact
 # easingthemes/ssh-deploy@main -> https://github.com/easingthemes/ssh-deploy
 
-name: Deploy to Server (as service)
+name: Deploy to Remote server (as service)
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy
+    name: Deploy to Remote server
     runs-on: ubuntu-22.04
 
     steps:
@@ -75,11 +75,11 @@ jobs:
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH }}
-          TARGET: "/appcfg/github-actions"
+          TARGET: /appcfg/github-actions
 
   post_deploy:
     needs: deploy
-    name: Post deploy
+    name: Post deploy actions on remote server
     runs-on: ubuntu-22.04
 
     steps:
@@ -92,11 +92,19 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH }}
           script: |
-#           Create forlder and move jar to folder
             mkdir /appcfg/jar
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
         run: echo "123 Restart service"
+
+      - name: Remove github-actions folder
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH }}
+          script: rm -dfr /appcfg/github-actions
 
