@@ -1,6 +1,8 @@
 # open repository settings -> Secrets and variables -> Actions
 # Add 3 secrets: SERVER_HOST, SERVER_PORT, SERVER_USER, SERVER_SSH
 
+# rsync
+
 # actions/checkout@v3
 # actions/setup-java@v3
 # gradle/gradle-build-action@v2 -> https://github.com/gradle/gradle-build-action
@@ -14,6 +16,9 @@ on:
   push:
     branches:
       - main
+
+env:
+  INSTALL_SERVICE: true
 
 permissions:
   contents: read
@@ -70,9 +75,19 @@ jobs:
           REMOTE_HOST: ${{ secrets.SERVER_HOST }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
-          TARGET: "/appcfg"
+          TARGET: "/appcfg/github-actions"
 
+  post_deploy:
+    needs: deploy
+    name: Post deploy
+    runs-on: ubuntu-22.04
 
-# Post deploy (install service)
-# Post deploy (restart service)
+    steps:
+      - name: Install service
+        if: env.INSTALL_SERVICE == 'true'
+        run: echo "123 Install service"
+
+      - name: Restart service
+        if: env.INSTALL_SERVICE != 'true'
+        run: echo "123 Restart service"
 
