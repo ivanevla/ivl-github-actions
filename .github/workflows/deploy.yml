@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: libs/ivl-github-actions-0.0.1-SNAPSHOT.jar
+          path: build/libs/ivl-github-actions-0.0.1-SNAPSHOT.jar
 
 #      - name: Upload to Server
 
