@@ -85,7 +85,16 @@ jobs:
     steps:
       - name: Install service
         if: env.INSTALL_SERVICE == 'true'
-        run: echo "123 Install service $INSTALL_SERVICE"
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH }}
+          script: |
+#           Create forlder and move jar to folder
+            mkdir /appcfg/jar
+            cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
