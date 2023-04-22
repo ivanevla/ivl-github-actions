@@ -109,12 +109,12 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH }}
           script: |
-            echo ${{ secrets.SERVER_PASS }} | sudo systemctl stop ivl-github-actions.service
-            echo ${{ secrets.SERVER_PASS }} | sudo systemctl disable ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo -S systemctl stop ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo -S systemctl disable ivl-github-actions.service
             mv /appcfg/jar/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar.old
             mv /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
-            echo ${{ secrets.SERVER_PASS }} | sudo systemctl enable ivl-github-actions.service
-            echo ${{ secrets.SERVER_PASS }} | sudo systemctl start ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo -S systemctl enable ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo -S systemctl start ivl-github-actions.service
 
       - name: Remove github-actions folder
         uses: appleboy/ssh-action@v0.1.10
