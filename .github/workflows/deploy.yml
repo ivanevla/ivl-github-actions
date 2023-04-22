@@ -94,6 +94,7 @@ jobs:
           script: |
             mkdir /appcfg/jar
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
+            sudo mv /appcfg/github-actions/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'

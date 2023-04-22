@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 User=usupp
-ExecStart=/usr/bin/java -jar /appcfg/app/ivl-github-actions.jar --server.port=80
+ExecStart=/usr/bin/java -jar /appcfg/jar/ivl-github-actions.jar --server.port=80
 SuccessExitStatus=143
 TimeoutStopSec=10
 Restart=on-failure # always
