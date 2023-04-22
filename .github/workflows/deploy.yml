@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Install service
+      - name: Install service (first time)
         if: env.INSTALL_SERVICE == 'true'
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -96,8 +96,8 @@ jobs:
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
             echo ${{ secrets.SERVER_PASS }} | sudo -S mv /appcfg/github-actions/scripts/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
             sudo systemctl daemon-reload
-            systemctl enable ivl-github-actions.service
-            systemctl start ivl-github-actions.service
+            sudo systemctl enable ivl-github-actions.service
+            sudo systemctl start ivl-github-actions.service
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
