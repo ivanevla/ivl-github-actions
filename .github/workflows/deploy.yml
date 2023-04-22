@@ -17,8 +17,9 @@ on:
     branches:
       - main
 
+# INSTALL_SERVICE -> MODE: install_service | restart_service | remove_service
 env:
-  INSTALL_SERVICE: true
+  INSTALL_SERVICE: false
 
 permissions:
   contents: read
@@ -93,7 +94,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH }}
           script: |
             mkdir -p /appcfg/jar
-            cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
+            mv /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
             echo ${{ secrets.SERVER_PASS }} | sudo -S mv /appcfg/github-actions/scripts/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
             echo ${{ secrets.SERVER_PASS }} | sudo systemctl daemon-reload
             echo ${{ secrets.SERVER_PASS }} | sudo systemctl enable ivl-github-actions.service
@@ -101,7 +102,19 @@ jobs:
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
-        run: echo "123 Restart service"
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH }}
+          script: |
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl stop ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl disable ivl-github-actions.service
+            mv /appcfg/jar/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar.old
+            mv /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl enable ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl start ivl-github-actions.service
 
       - name: Remove github-actions folder
         uses: appleboy/ssh-action@v0.1.10
