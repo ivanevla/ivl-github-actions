@@ -34,6 +34,13 @@ jobs:
         with:
           arguments: clean build
 #          cache-disabled: true
+          gradle-home-cache-includes: |
+            caches
+            notifications
+            jdks
+          gradle-home-cache-excludes: |
+            caches/build-cache-1
+            caches/keyrings
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
