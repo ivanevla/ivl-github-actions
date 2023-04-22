@@ -1,5 +1,5 @@
-
-
+# actions/checkout@v3
+# actions/setup-java@v3
 # gradle/gradle-build-action@v2 -> https://github.com/gradle/gradle-build-action
 # actions/upload-artifact@v3 -> https://github.com/actions/upload-artifact
 # actions/download-artifact@v3 -> https://github.com/actions/download-artifact
