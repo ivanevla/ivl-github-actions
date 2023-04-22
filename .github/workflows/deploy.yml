@@ -1,5 +1,8 @@
+
+
 # gradle/gradle-build-action@v2 -> https://github.com/gradle/gradle-build-action
 # actions/upload-artifact@v3 -> https://github.com/actions/upload-artifact
+# actions/download-artifact@v3 -> https://github.com/actions/download-artifact
 
 name: Deploy to Server (as service)
 
@@ -28,6 +31,7 @@ jobs:
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
+        cache-disabled: true
         with:
           arguments: clean build
 
@@ -51,5 +55,5 @@ jobs:
           name: artifact
 
 
-
+# post deploy
 
