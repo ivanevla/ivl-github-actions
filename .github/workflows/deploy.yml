@@ -71,10 +71,10 @@ jobs:
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH }}
           REMOTE_HOST: ${{ secrets.SERVER_HOST }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH }}
           TARGET: "/appcfg/github-actions"
 
   post_deploy:
@@ -85,7 +85,7 @@ jobs:
     steps:
       - name: Install service
         if: env.INSTALL_SERVICE == 'true'
-        run: echo '123 Install service $INSTALL_SERVICE'
+        run: echo "123 Install service $INSTALL_SERVICE"
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
