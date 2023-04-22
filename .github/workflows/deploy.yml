@@ -95,9 +95,9 @@ jobs:
             mkdir -p /appcfg/jar
             cp /appcfg/github-actions/ivl-github-actions.jar /appcfg/jar/ivl-github-actions.jar
             echo ${{ secrets.SERVER_PASS }} | sudo -S mv /appcfg/github-actions/scripts/ivl-github-actions.service /etc/systemd/system/ivl-github-actions.service
-            sudo systemctl daemon-reload
-            sudo systemctl enable ivl-github-actions.service
-            sudo systemctl start ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl daemon-reload
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl enable ivl-github-actions.service
+            echo ${{ secrets.SERVER_PASS }} | sudo systemctl start ivl-github-actions.service
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
