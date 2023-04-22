@@ -85,7 +85,7 @@ jobs:
     steps:
       - name: Install service
         if: env.INSTALL_SERVICE == 'true'
-        run: echo "123 Install service"
+        run: echo '123 Install service $INSTALL_SERVICE'
 
       - name: Restart service
         if: env.INSTALL_SERVICE != 'true'
