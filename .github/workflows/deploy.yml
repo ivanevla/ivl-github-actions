@@ -1,11 +1,12 @@
 # gradle/gradle-build-action@v2 -> https://github.com/gradle/gradle-build-action
 # actions/upload-artifact@v3 -> https://github.com/actions/upload-artifact
 
-name: Deploy to Server as service
+name: Deploy to Server (as service)
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 permissions:
   contents: read
