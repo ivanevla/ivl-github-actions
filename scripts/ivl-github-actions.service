@@ -7,7 +7,7 @@ User=usupp
 ExecStart=/usr/bin/java -jar /appcfg/jar/ivl-github-actions.jar --server.port=80
 SuccessExitStatus=143
 TimeoutStopSec=10
-Restart=on-failure # always
+Restart=on-failure
 RestartSec=30
 
 [Install]
