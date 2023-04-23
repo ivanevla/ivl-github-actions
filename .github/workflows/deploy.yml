@@ -60,7 +60,7 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy to Remote server
+    name: Deploy
     runs-on: ubuntu-22.04
 
     steps:
@@ -80,7 +80,7 @@ jobs:
 
   post_deploy:
     needs: deploy
-    name: Post deploy actions on remote server
+    name: Post deploy
     runs-on: ubuntu-22.04
 
     steps:
